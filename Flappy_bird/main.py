@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame import mixer
 
 # Initialising the modules in pygame
 pygame.init()
@@ -8,6 +9,11 @@ SCREEN = pygame.display.set_mode((500, 750))  # Setting the display
 
 # background
 BACKGROUND_IMAGE = pygame.image.load('background.jpg')
+
+# sounds
+wing = pygame.mixer.Sound('wing.wav')
+hit = pygame.mixer.Sound('hit.wav')
+point = pygame.mixer.Sound('point.wav')
 
 #  BIRD
 BIRD_IMAGE = pygame.image.load('bird1.png')
@@ -122,6 +128,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 #  if you press spacebar you will move up
                 bird_y_change = -6
+                pygame.mixer.Sound.play(wing)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
@@ -144,6 +151,7 @@ while running:
 
     if collision:
         # if a collision does occur we are gonna add that score to our list of scores and make waiting True
+        pygame.mixer.Sound.play(hit)
         score_list.append(score)
         waiting = True
 
@@ -152,6 +160,7 @@ while running:
         obstacle_x = 500
         OBSTACLE_HEIGHT = random.randint(200, 400)
         score += 1
+        pygame.mixer.Sound.play(point)
     # displaying the obstacle
     display_obstacle(OBSTACLE_HEIGHT)
 
